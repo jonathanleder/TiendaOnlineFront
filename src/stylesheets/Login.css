@@ -1,0 +1,32 @@
+.contenedor.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: aliceblue;
+    margin: 0;
+}
+    .card{
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        background-color: azure;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .btn-primary{
+        width: 100%;
+        background-color: blueviolet;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .btn-primary:hover{
+        background-color: blue;
+    }
+    .mb-3{
+        margin-bottom: 1rem;
+    }
