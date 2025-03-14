@@ -17,6 +17,7 @@ function Principal() {
         <div>
             <h1>Página Principal</h1>
             {/* Tu contenido principal */}
+            <p>Bienvenido!</p>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import {BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Login from "./Components/Login.jsx";
 import Registro from "./Components/Registro.jsx";
 import Principal from "./Components/Principal.jsx";
+import VerificationPage from "./Components/VerificationPage.jsx";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/registro" element={<Registro/>} />
               {/* Ruta para pagina principal*/}
               <Route path="/principal" element={<Principal/>} />
+              <Route path="/verification" element={<VerificationPage/>} />
           </Routes>
           </div>
           </div>
