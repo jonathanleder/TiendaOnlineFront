@@ -33,7 +33,7 @@ function Registro() {
 
                 setTimeout(() => {
                     window.location = '/login';
-                }, 2000);
+                }, 4000);
             }else{
              setError(response.data.message || "No se pudo completar el registro");
             }

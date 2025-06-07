@@ -1,0 +1,72 @@
+/* Asegúrate de que el contenedor del slider tenga un padding */
+.product-slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 40px; /* Añade espacio para que los botones no estén sobre las tarjetas */
+}
+
+/* Estilos del slider que contiene los productos */
+.product-slider {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    gap: 15px;
+    padding: 10px;
+}
+
+/* Estilos de cada tarjeta de producto */
+.product-card {
+    flex-shrink: 0;
+    width: 18rem;
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+}
+
+/* Ajusta las tarjetas para que tengan un tamaño uniforme */
+.product-card .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ocupa todo el espacio disponible */
+}
+
+/* Establece un tamaño fijo para las imágenes */
+.product-card img {
+    width: 100%; /* Hace que la imagen ocupe todo el ancho de la card */
+    height: 200px; /* Establece una altura fija */
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+}
+
+/* Ajusta el cuerpo de la tarjeta para que todas tengan el mismo tamaño */
+.product-card .card-body {
+    flex-grow: 1; /* Hace que el contenido ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el contenido uniformemente */
+}
+/* Botones de navegación */
+.slider-icon {
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10; /* Asegúrate de que el botón esté sobre las tarjetas */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Posición del botón izquierdo */
+.slider-icon.left {
+    left: 10px; /* Ajusta la posición horizontal del botón izquierdo */
+}
+
+/* Posición del botón derecho */
+.slider-icon.right {
+    right: 10px; /* Ajusta la posición horizontal del botón derecho */
+}
+
+/* Hover en los botones */
+.slider-icon:hover {
+    opacity: 0.8;
+}

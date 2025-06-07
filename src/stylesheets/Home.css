@@ -1,0 +1,7 @@
+.carousel-item img{
+    height: 400px;
+    object-fit: cover;
+}
+#main-carousel{
+    margin-top: 50px;
+}

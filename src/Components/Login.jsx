@@ -1,18 +1,19 @@
 import React from 'react';
-import '../stylesheets/login.css';
+import '../stylesheets/Login.css';
 import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {useState} from "react";
+import {useAuth} from "../Components/AuthContext.jsx";
 
 
 function Login() {
 
     const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const navigate = useNavigate();
+    const {login} = useAuth();
 
     async function handleLogin(event) {
         event.preventDefault();
@@ -23,14 +24,20 @@ function Login() {
             const response = await axios.post("http://localhost:8080/api/auth/login", {username, password});
 
             if(response.data.authStatus === "LOGIN_SUCCESSFULLY"){
-                setSuccessMessage(response.data.message);
+                setSuccessMessage("Inicio de sesion exitoso");
                 localStorage.setItem("token", response.data.token);
 
+                login({
+                    username: username,
+                    name: username,
+                });
+
                 setTimeout(()=>{
-                    navigate('/principal');
-                }, 1000);
+                    navigate('/home');
+                }, 2000);
             }
         }catch (err){
+            setSuccessMessage("");
             if(err.response?.data?.message){
                 setError(err.response.data.message);
             }else{
@@ -40,18 +47,16 @@ function Login() {
         }
 
     }
-
-
     return (
         <div>
             <div className="card">
                 <form onSubmit={handleLogin}>
                     <h2 className={"text-center"}>Iniciar sesion</h2>
                     <div className="mb-3">
-                        {error && (
+                        {error && !successMessage && (
                             <div className="alert alert-danger">{error}</div>
                         )}
-                        {successMessage && (
+                        {successMessage && !error && (
                             <div className="alert alert-success">{successMessage}</div>
                         )}
                         <label htmlFor='username' className={'form-label'}>Username</label>
