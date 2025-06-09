@@ -4,12 +4,15 @@ import {Card} from "react-bootstrap";
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import {Button} from "react-bootstrap";
 import "../stylesheets/ProductSlider.css";
+import {useNavigate} from "react-router-dom";
 
 
 
 
 const ProductSlider = () => {
     const [products,setProducts] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/products/")
@@ -67,7 +70,7 @@ const ProductSlider = () => {
                                     </Card.Text>
                                     {/* Precio del producto */}
                                     {/*  Redirige al detalle del producto */}
-                                    <Button variant="primary" >Ver Producto</Button>{" "}
+                                    <Button variant="primary" onClick={()=> navigate(`/products/${product.id}`)} >Ver Producto</Button>{" "}
                                     {/*onClick={()=> navigate(`/producto/${product.id}`)})*/}
                                     {/* Botón para ver más detalles */}
                                 </Card.Body>
