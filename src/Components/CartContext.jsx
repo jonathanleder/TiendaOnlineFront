@@ -3,7 +3,7 @@ import {createContext,useContext,useState,useEffect} from "react";
 
 const CartContext= createContext();
 
-const CartProvider = ({children}) => {
+export const CartProvider = ({children}) => {
 
     const [cart, setCart] = useState(() => {
         const savedCart = localStorage.getItem("cart");

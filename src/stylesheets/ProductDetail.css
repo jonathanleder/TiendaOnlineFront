@@ -1,0 +1,43 @@
+/* Contenedor principal de la página de detalles del producto */
+.product-detail-container {
+    display: flex; /* Utiliza flexbox para centrar el contenido */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 20px; /* Agrega espacio alrededor del contenido */
+}
+
+/* Estilos de la tarjeta donde se muestran los detalles del producto */
+.product-detail-card {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 900px; /* Limita el ancho máximo a 900px para que no sea demasiado grande */
+}
+
+/* Imagen del producto dentro de la tarjeta */
+.product-detail-img {
+    height: 100%; /* Asegura que la imagen ocupe toda la altura disponible */
+    object-fit: cover; /* Ajusta la imagen para que cubra todo el espacio sin deformarse */
+}
+
+/* Contenedor para los botones de cantidad (+ y -) */
+.quantity-container {
+    display: flex; /* Usa flexbox para alinear los elementos en línea */
+    align-items: center; /* Alinea verticalmente los elementos al centro */
+    gap: 10px; /* Espacio entre los botones y la cantidad */
+    margin-top: 10px; /* Agrega margen superior para separar del resto del contenido */
+}
+
+/* Estilos para los botones de cantidad (+ y -) */
+.quantity-container button {
+    width: 40px; /* Define un ancho fijo para los botones */
+    height: 40px; /* Define una altura fija para los botones */
+    font-size: 18px; /* Ajusta el tamaño del texto dentro del botón */
+    border-radius: 5px; /* Agrega bordes redondeados */
+}
+
+/* Estilo para mostrar la cantidad seleccionada */
+.quantity {
+    font-size: 20px; /* Ajusta el tamaño del número */
+    font-weight: bold; /* Hace que el número se vea más resaltado */
+}
