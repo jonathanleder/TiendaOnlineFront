@@ -25,30 +25,30 @@ export const CartProvider = ({children}) => {
 
             if (totalQuantity > product.stock) {
                 setErrorMessage(
-                    `No hay suficiente producto en stock disponible, solo puedes agregar ${product.stock - existingProduct.quantity} unidades mas`
+                    `No hay suficiente producto en stock disponible, solo puedes agregar ${product.stock - existingProduct.quantity} unidades más`
                 );
             } else {
                 setCart(cart.map((item) =>
-                    item.id === product.id ? {
-                            ...item,
-                            quantity: item.quantity + quantity
-                        }
-                        : item));
-                setErrorMessage("No hay suficiente producto en stock");
+                    item.id === product.id
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
+                ));
+                setErrorMessage(""); // ✅ Borrar mensaje de error si todo está OK
             }
         } else {
             if (quantity > product.stock) {
                 setErrorMessage(
-                    `No hay suficiente producto en stock disponible, solo puedes agregar ${product.stock} unidades mas`
+                    `No hay suficiente producto en stock disponible, solo puedes agregar ${product.stock} unidades`
                 );
             } else {
-                setCart([...cart, {...product, quantity}]);
-                setErrorMessage("");
+                setCart([...cart, { ...product, quantity }]);
+                setErrorMessage(""); // ✅ También acá
             }
-
         }
+
         setShowCartMenu(true);
     };
+
 
     const increaseQuantity = (productId) => {
             setCart(cart.map((item) =>

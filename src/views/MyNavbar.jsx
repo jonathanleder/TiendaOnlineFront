@@ -5,18 +5,28 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import {Offcanvas} from 'react-bootstrap';
+import {Card, Offcanvas} from 'react-bootstrap';
 import {useAuth} from '../Components/AuthContext.jsx';
 import {FaShoppingBag} from 'react-icons/fa';
+import {useCart} from '../Components/CartContext';
+import Badge from 'react-bootstrap/Badge';
+import "../stylesheets/MyNavbar.css";
 import logo from '../assets/images/logo.jpg';
 
 
 function MyNavbar() {
 
+    const{
+        cart,increaseQuantity,decreaseQuantity,removeFromCart,
+            showCartMenu,setShowCartMenu,clearCart,
+    }= useCart();
+
     const{user,logout} = useAuth();//extraemos de la funcion useAuth el usuario y si esta logueado o no
     const [searchterm,setSearchTerm] = useState('');
 
-    const[showCartMenu,setShowCartMenu] = useState(false);
+    const [errorMessage,setErrorMessage] = useState('');
+
+
     const handleCartClick = () => {
         setShowCartMenu(!showCartMenu);
     }
@@ -24,6 +34,36 @@ function MyNavbar() {
     const handleSearch= (event) => {
         event.preventDefault();
         if(searchterm.trim()){ /* empty */ }
+    };
+    const handleIncreaseQuantity = (productId,stock) =>{
+        const productInCart = cart.find((item) => item.id === productId);
+        if(productInCart.quantity < stock){
+            increaseQuantity(productId);
+            setErrorMessage(" ");
+        }else{
+            setErrorMessage("No hay stock disponible");
+        }
+    };
+
+    const handleDecreaseQuantity = (productId) =>{
+        decreaseQuantity(productId);
+        setErrorMessage("");
+    }
+
+    const totalItemsInCart = cart.length;
+
+    const totalPrice = cart.reduce((total,product) => total +product.precio *product.quantity, 0);
+    const handleLogout = () => {
+        clearCart();
+        logout();
+    }
+
+    const handleCheckout = () => {
+        if(user){
+            window.location.href='/checkout';
+        }else{
+            window.location.href='/login';
+        }
     };
 
     return (
@@ -50,7 +90,13 @@ function MyNavbar() {
 
                         <Nav.Link href="#" className="cart-icon" onClick={handleCartClick}>
                             <FaShoppingBag size={24}/>
+                            {totalItemsInCart >0 &&(
+                                <Badge pill bg="danger" className="cart-badge">
+                                    { totalItemsInCart}
+                                </Badge>
+                            )}
                         </Nav.Link>
+
 
                         {user ? (
 
@@ -60,7 +106,7 @@ function MyNavbar() {
 
                             <NavDropdown.Item href="/ayuda">Ayuda</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={logout}>
+                            <NavDropdown.Item onClick={handleLogout}>
                                 Cerrar Sesion
                             </NavDropdown.Item>
                         </NavDropdown>
@@ -75,6 +121,68 @@ function MyNavbar() {
                     <Offcanvas.Title>Carrito de compras</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
+                    {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                            {errorMessage}
+                        </div>
+                    )}
+                    <div className="cart-items-container">
+                        {cart.map((product) => (
+                            <div key={product.id} className="cart-item">
+                                <img
+                                          src={`http://localhost:8080/${product.imagenUrl}`}
+                                          alt="imagen-url"
+                                          className="cart-item-img"
+                                />
+                                <div className="cart-items-details">
+                                    <p>{product.nombre}</p>
+                                    <p>Precio unitario: {" "}
+                                    {new Intl.NumberFormat("es-CO", {
+                                        style: "currency",
+                                        currency: "COP",
+                                        minimumFractionDigits: 0,
+                                    }).format(product.precio)}
+                                    </p>
+                                    <div className="quantity-container">
+                                        <Button variant="secondary" size="sm" onClick={()=> handleDecreaseQuantity(product.id)}>
+                                            -
+                                        </Button>
+                                        <span className="quantity">{product.quantity}</span>
+                                        <Button variant="secondary" size="sm" onClick={()=> handleIncreaseQuantity(product.id,product.stock)}>
+                                            +
+                                        </Button>
+                                    </div>
+                                    <p>Precio total: {" "}
+                                    {new Intl.NumberFormat("es-CO", {
+                                        style: "currency",
+                                        currency: "COP",
+                                        minimumFractionDigits: 0,
+                                    }).format(product.precio * product.quantity)}
+                                    </p>
+                                    <Button variant="danger" size="sm" onClick={()=> removeFromCart(product.id)}>
+                                        Eliminar
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
+                    <div className="cart-total">
+                        <hr/>
+                        <p className="total-text">
+                            <strong>Total: </strong>{" "}
+                                {new Intl.NumberFormat("es-CO", {
+                                    style: "currency",
+                                    currency: "COP",
+                                    minimumFractionDigits: 0,
+                                }).format(totalPrice)}
+                        </p>
+                        {totalItemsInCart > 0 && (
+                            <Button className="bg-green text-white w-100 mt-3" onClick={handleCheckout}>
+                                {user ? "Ir a pagar" : "Iniciar Sesion para continuar"}
+                            </Button>
+                        )}
+                    </div>
                     <p>Aqui se mostraran los productos en el carrito de compras</p>
                 </Offcanvas.Body>
             </Offcanvas>
